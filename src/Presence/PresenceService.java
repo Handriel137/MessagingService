@@ -6,6 +6,7 @@ package Presence;
  * @author Jonathan Engelsma
  * @version 1.0
  */
+
 import Client.RegistrationInfo;
 
 import java.rmi.Remote;

@@ -1,12 +1,13 @@
-package edu.gvsu.cis;
+package Client;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EchoServer {
+public class ClientListener implements Runnable {
 
-    public static void main(String args[]) {
+    @Override
+    public void run() {
         ServerSocket echoServer = null;
         Socket clientSocket = null;
 
@@ -18,11 +19,11 @@ public class EchoServer {
             return;
         }
 
-        while(true) {
+        while (true) {
             try {
                 System.out.println("Waiting for connections");
                 clientSocket = echoServer.accept();
-                Thread thread  = new Thread(new ProcessIncomingRequest(clientSocket));
+                Thread thread = new Thread(new ProcessIncomingRequest(clientSocket));
                 thread.start();
             } catch (IOException e) {
                 // TODO Auto-generated catch block

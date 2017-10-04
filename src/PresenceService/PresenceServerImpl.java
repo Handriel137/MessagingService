@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class PresenceServerImpl implements PresenceService {
 
-    Hashtable<String, RegistrationInfo> registeredUsers = new Hashtable();
+    Hashtable<String, RegistrationInfo> registeredUsers = new Hashtable<>();
 
     public static void main(String[] args) {
         if (System.getSecurityManager() == null) {
@@ -35,7 +35,7 @@ public class PresenceServerImpl implements PresenceService {
 
         if (!registeredUsers.containsKey(reg.getUserName())) {
             registeredUsers.put(reg.getUserName(), reg);
-            System.out.println("User " + reg.getUserName() + "registered!!!");
+            System.out.println("User " + reg.getUserName() + " registered!!!");
             return true;
         }
         System.out.println("Duplicate Entry!");
@@ -65,7 +65,7 @@ public class PresenceServerImpl implements PresenceService {
     }
 
     public Vector<RegistrationInfo> listRegisteredUsers() throws RemoteException {
-       Vector<RegistrationInfo> userList = new Vector<>();
+       Vector<RegistrationInfo> userList = new Vector<RegistrationInfo>();
        userList.addAll(registeredUsers.values());
         return userList;
     }

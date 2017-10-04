@@ -1,4 +1,4 @@
-package edu.gvsu.cis;
+package Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class ProcessIncomingRequest implements Runnable {
                 if(line == null) {
                     break;
                 }
-                System.out.println("Received " + line);
+                System.out.println("Received: " + line);
                 os.println(line);
             }
         } catch (IOException e) {
