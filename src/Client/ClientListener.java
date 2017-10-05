@@ -6,13 +6,18 @@ import java.net.Socket;
 
 public class ClientListener implements Runnable {
 
+    private Integer inputPort;
+
+    public ClientListener(Integer listenPort) {
+        this.inputPort = listenPort;
+    }
     @Override
     public void run() {
         ServerSocket echoServer = null;
         Socket clientSocket = null;
 
         try {
-            echoServer = new ServerSocket(9998);
+            echoServer = new ServerSocket(inputPort);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

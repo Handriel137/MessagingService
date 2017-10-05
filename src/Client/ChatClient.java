@@ -21,7 +21,6 @@ public class ChatClient {
         String serverHost = "localhost";
         Integer serverPort = 1099;
 
-
         BufferedReader is = new BufferedReader(new InputStreamReader(System.in));
 
         if (args.length == 2) {
@@ -44,9 +43,6 @@ public class ChatClient {
         }
 
         try {
-            //start listener here
-            Thread listener = new Thread(new ClientListener());
-            listener.start();
 
 
             //look for server
@@ -57,9 +53,9 @@ public class ChatClient {
             //check for duplicate username.  If found exit.
             for (RegistrationInfo reg:server.listRegisteredUsers()) {
                 if(reg.getUserName().equals(username)) {
-                        System.out.println("!!--User already exists in registry--!!\n");
-                        System.exit(0);
-                    }
+                    System.out.println("!!--User already exists in registry--!!\n");
+                    System.exit(0);
+                }
 
             }
 
@@ -69,13 +65,20 @@ public class ChatClient {
             clientHost = InetAddress.getLocalHost();
             String Hostname = clientHost.getHostName();
 
+            //Get the port for the client
+            BufferedReader portInput = new BufferedReader(new InputStreamReader(System.in));
+            Integer clientPort = getListenPort(portInput);
+
 
             //creates new reginfo object for this client
-            RegistrationInfo user = new RegistrationInfo(username, Hostname, 9998, status);
+            RegistrationInfo user = new RegistrationInfo(username, Hostname, clientPort, status);
 
             //registers with RMIregistry
             server.register(user);
 
+            //start listener here
+            Thread listener = new Thread(new ClientListener(clientPort));
+            listener.start();
 
             //Menu Structure
             while (running) {
@@ -225,5 +228,17 @@ public class ChatClient {
 
 
     }
+
+    private static Integer getListenPort(BufferedReader is) {
+        try {
+            System.out.println("Input Port for client\n");
+            String input = is.readLine();
+            return Integer.parseInt(input);
+        } catch (IOException e) {
+            System.out.println("!--Defaulting to listen port 9999--!\n");
+            return 9999;
+        }
+    }
+
 }
 
