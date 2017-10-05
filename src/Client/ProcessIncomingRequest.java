@@ -17,6 +17,7 @@ public class ProcessIncomingRequest implements Runnable {
     @Override
     public void run() {
         String line;
+        String username;
         BufferedReader is;
         PrintStream os;
 
@@ -24,13 +25,13 @@ public class ProcessIncomingRequest implements Runnable {
             is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             os = new PrintStream(clientSocket.getOutputStream());
 
-            while(true) {
+            while (true) {
                 line = is.readLine();
-                if(line == null) {
+                if (line == null) {
                     break;
                 }
-                System.out.println("Received: " + line);
-                os.println(line);
+                System.out.println(line);
+//                os.println("second line\n" + line);
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block

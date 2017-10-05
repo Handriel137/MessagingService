@@ -21,7 +21,7 @@ public class ClientListener implements Runnable {
 
         while (true) {
             try {
-                System.out.println("Waiting for connections");
+//                System.out.println("Waiting for connections");
                 clientSocket = echoServer.accept();
                 Thread thread = new Thread(new ProcessIncomingRequest(clientSocket));
                 thread.start();
