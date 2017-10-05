@@ -48,10 +48,21 @@ public class ChatClient {
             Thread listener = new Thread(new ClientListener());
             listener.start();
 
+
             //look for server
             String name = "PresenceServer";
             Registry registry = LocateRegistry.getRegistry(serverHost, serverPort);
             PresenceService server = (PresenceService) registry.lookup(name);
+
+            //check for duplicate username.  If found exit.
+            for (RegistrationInfo reg:server.listRegisteredUsers()) {
+                if(reg.getUserName().equals(username)) {
+                        System.out.println("!!--User already exists in registry--!!\n");
+                        System.exit(0);
+                    }
+
+            }
+
 
             //gets client's host
             InetAddress clientHost;
@@ -60,7 +71,8 @@ public class ChatClient {
 
 
             //creates new reginfo object for this client
-            RegistrationInfo user = new RegistrationInfo(username, Hostname, 9999, status);
+            RegistrationInfo user = new RegistrationInfo(username, Hostname, 9998, status);
+
             //registers with RMIregistry
             server.register(user);
 
@@ -152,6 +164,7 @@ public class ChatClient {
                 "----------------------------------------------------\n");
     }
 
+    //builds a message from arguements given for Broadcast.
     private static String buildBroadcastMessage(String[] tokens) {
 
         String message = "";
@@ -165,7 +178,7 @@ public class ChatClient {
         return trimmedMessage;
     }
 
-
+    //constructs the message the user wants to send from the arguements given
     private static String buildMessage(String[] tokens) {
 
         String message = "";
@@ -179,6 +192,7 @@ public class ChatClient {
         return trimmedMessage;
     }
 
+    //opens a socket, sends a message anc closes the socket
     private static void sendMessage(String message, PresenceService server, String targetName) {
 
         try {

@@ -12,7 +12,7 @@ public class ClientListener implements Runnable {
         Socket clientSocket = null;
 
         try {
-            echoServer = new ServerSocket(9999);
+            echoServer = new ServerSocket(9998);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
